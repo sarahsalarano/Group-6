@@ -43,3 +43,9 @@ ggplot(data = penguins, aes(y = bill_depth_mm, x = bill_length_mm)) +
   geom_point(na.rm = TRUE)
 
 #This removes rows that have data missing for the variables specified in the plot's mapping.
+
+#Question 7: Add a caption.
+
+ggplot(data = penguins, aes(y = bill_depth_mm, x = bill_length_mm)) +
+  geom_point(na.rm = TRUE) +
+  labs(caption = "Data comes from the palmerpenguins package.")
