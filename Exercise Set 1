@@ -10,3 +10,32 @@
 ggplot(data = penguins)
 ggplot(data = penguins, mapping = aes (x = bill_length_mm, y = bill_depth_mm))
 ggplot(data = penguins, mapping = aes(x = bill_length_mm, y = bill_depth_mm)) + geom_point()
+
+# Question 4 
+
+ggplot(penguins, aes(x = species, y = bill_depth_mm)) +
+  geom_point()
+
+#This creates a scatterplot but the results are organized by categories on the x-axis.
+#A better option may be to use a boxplot, like the one below:
+
+ggplot(penguins, aes(x = species, y = bill_depth_mm)) +
+  geom_boxplot()
+
+# Question 5: Why does the following give an error and how would you fix it?
+
+ggplot(data = penguins) +
+  geom_point()
+
+#This code gives an error because the mapping is not specified.
+#This can be resolved by mapping aesthetics, for example:
+
+ggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point()
+
+#Question 6: What does the na.rm function do in geom_point()?
+
+ggplot(data = penguins, aes(y = bill_depth_mm, x = bill_length_mm)) +
+  geom_point(na.rm = TRUE)
+
+#This removes rows that have data missing for the variables specified in the plot's mapping.
