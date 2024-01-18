@@ -1,15 +1,19 @@
-> library(palmerpenguins)
+library(palmerpenguins)
 
-#Question 1
-> penguins
-  There are 344 rows and 8 columns.
+# Question 1
+penguins
 
-#Question 2
+#There are 344 rows and 8 columns.
 
-#Question 3
+# Question 2
+
+# Question 3
 ggplot(data = penguins)
 ggplot(data = penguins, mapping = aes (x = bill_length_mm, y = bill_depth_mm))
 ggplot(data = penguins, mapping = aes(x = bill_length_mm, y = bill_depth_mm)) + geom_point()
+ggplot(data = penguins, mapping = aes(x = bill_length_mm, y = bill_depth_mm)) + geom_point() + geom_smooth(method = "lm")
+
+#There appears to be no relationship between the variables, even when the line of best fit is added to the graph. 
 
 # Question 4 
 
