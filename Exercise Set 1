@@ -1,0 +1,11 @@
+> library(palmerpenguins)
+
+#Question 1
+> penguins
+  There are 344 rows and 8 columns.
+
+#Question 2
+
+#Question 3
+ggplot(data = penguins)
+ggplot(data = penguins, mapping = aes (x = bill_length_mm, y = bill_depth_mm))
