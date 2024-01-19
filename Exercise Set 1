@@ -1,11 +1,14 @@
 library(palmerpenguins)
 
+#Exercises 1.2.5 (1-10):
 # Question 1
 penguins
 
 #There are 344 rows and 8 columns.
 
 # Question 2
+
+#Per the help file, bill_depth_mm is "a number denoting bill depth (millimeters).
 
 # Question 3
 ggplot(data = penguins)
@@ -49,3 +52,96 @@ ggplot(data = penguins, aes(y = bill_depth_mm, x = bill_length_mm)) +
 ggplot(data = penguins, aes(y = bill_depth_mm, x = bill_length_mm)) +
   geom_point(na.rm = TRUE) +
   labs(caption = "Data comes from the palmerpenguins package.")
+
+#Question 8: 
+
+ggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass_g, color = bill_depth_mm)) +
+  geom_point() +
+  geom_smooth(se = TRUE)
+
+#bill_depth_mm should be mapped to color at the global level.
+#(It doesn't work when mapped at the geom level)
+
+#Question 9:
+
+#This should graph flipper length on the x and mass on the y,
+#There should be three distinct colors based on the islands (categorical)
+#Because of the factor variable there should be three lines of fit
+
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g, color = island)) +
+  geom_point() + 
+  geom_smooth(se = FALSE)
+
+#Question 10:
+
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point() +
+  geom_smooth()
+
+ggplot() +
+  geom_point(data = penguins, mapping = aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_smooth(data = penguins, mapping = aes(x = flipper_length_mm, y = body_mass_g))
+
+#These are the same plot.  The difference is that one puts the parameters in the global and the other
+#specifies the parameters in each geom.  Because each geom in the second is exactly the same as the 
+#global in the first, the graphs are identical.
+
+#Exercises 1.4.3 (1-4):
+
+#Question 1:
+
+
+
+#Question 2:
+
+
+
+#Question 3:
+
+
+
+#Question 4:
+
+
+
+#Exercises 1.5.5 (1-6):
+
+#Question 1:
+
+
+
+#Question 2:
+
+
+
+#Question 3:
+
+
+
+#Question 4:
+
+
+
+#Question 5:
+
+
+
+#Question 6:
+
+
+
+#Exercises 1.6.1 (1-2):
+
+#Question 1:
+
+ggplot(mpg, aes(x = class)) +
+  geom_bar()
+ggplot(mpg, aes(x = cty, y = hwy)) +
+  geom_point()
+ggsave("mpg-plot.png")
+
+#This code saves the second plot because it is the most recent.
+
+#Question 2:
+
+#To save the file as a PDF instead of a PNG, simply change the file name to "mpg-plot.pdf"
