@@ -90,19 +90,55 @@ ggplot() +
 
 #Question 1:
 
+ggplot(palmerpenguins::penguins, aes(y = species)) +
+  geom_bar()
 
+#In this graph, the x-axis stands for the number of countings for each species, 
+#and the y-axis stands for the name of each species.
 
 #Question 2:
 
+ggplot(palmerpenguins::penguins, aes(x = species)) +
+  geom_bar(color = "red")
 
+ggplot(palmerpenguins::penguins, aes(x = species)) +
+  geom_bar(fill = "red")
+
+#In the first plot, only the edges of each bin are red. In the second plot, the
+#entire bin is red. The aesthetic "fill" is more useful for changing the color
+#of bars.
 
 #Question 3:
 
-
+#The argument "bins" sets the number of bins in the histogram. The default is 30.
 
 #Question 4:
 
+#First we plot a kernel density graph to be reference.
+ggplot(diamonds, aes(x = carat)) +
+  geom_density()
 
+#Then we experiment plotting the histograms with binwidth equals 0.01, 0.025,
+#0.05, 0,1, 0.2
+
+ggplot(diamonds, aes(x = carat)) +
+  geom_histogram(binwidth = 0.01)
+
+ggplot(diamonds, aes(x = carat)) +
+  geom_histogram(binwidth = 0.025)
+
+ggplot(diamonds, aes(x = carat)) +
+  geom_histogram(binwidth = 0.05)
+
+ggplot(diamonds, aes(x = carat)) +
+  geom_histogram(binwidth = 0.1)
+
+ggplot(diamonds, aes(x = carat)) +
+  geom_histogram(binwidth = 0.2)
+
+#We can see that, when binwidth = 0.1, the histogram reveals the most interesting
+#patterns. In particular, it has five peaks at arount 0.3, 0.6, 1, 1.5, 2. This
+#pattern coincides with what we can see from the kernel density graph.
 
 #Exercises 1.5.5 (1-6):
 
