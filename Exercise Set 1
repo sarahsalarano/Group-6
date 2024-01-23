@@ -144,27 +144,82 @@ ggplot(diamonds, aes(x = carat)) +
 
 #Question 1:
 
+?mpg
+
+#This function reveals the number of rows, variables, and the full names and units of each variable.
+#The categorical variables are: manufacturer, model, trans, drv, fl, class.
+#The numerical variables are: displ, year, cyl, cty, hwy.
 
 
 #Question 2:
 
+library(tidyverse)
+ggplot(data = mpg)
+ggplot(mpg, aes(x = hwy, y = displ)) + geom_point()
 
+#This created a scatterplot of hwy vs. displ using the mpg data frame.
+
+ggplot(mpg, aes(x = hwy, y = displ, color = year)) + geom_point()
+
+#This created a scatterplot with a third numerical variable, year, mapped to color.
+
+ggplot(mpg, aes(x = hwy, y = displ, size = year)) + geom_point()
+
+#This created a scatterplot with a third numerical variable, year, mapped to size.
+
+ggplot(mpg, aes(x = hwy, y = displ, color = year, size = year)) + geom_point()
+
+#This created a scatterplot with a third numerical variable, year, mapped to color and size.
+
+ggplot(mpg, aes(x = hwy, y = displ, color = year, size = year, shape = trans)) + geom_point()
+
+#This created a scatterplot with a third numerical variable, year, mapped to color and size
+#As well as a categorical variable, trans, mapped to shape.
+#R Studio is unable to map a numerical variable under the shape function. 
 
 #Question 3:
 
+ggplot(mpg, aes(x = hwy, y = displ, linewidth = year)) + geom_point()
 
+#The linewidth function only works on numerical variables.
+#There is no change in the graph by adding the linewidth function.
+
+ggplot(mpg, aes(x = hwy, y = displ, linewidth = year)) + geom_point() + geom_smooth(method = "lm")
+
+#I included a line and the linewidth function.
+#R Studio is unable to determine which correct grouping structure to apply the linewidth to.
 
 #Question 4:
 
+ggplot(mpg, aes(x = hwy, y = hwy, color = hwy)) + geom_point()
+ggplot(mpg, aes(x = cyl, y = cyl, color = cyl)) + geom_point()
 
+#I first mapped hwy to the same aesthetics.
+#I then mapped cyl to the same aesthetics.
+#The result in both cases is a straight diagonal line with evenly sized data points.
 
 #Question 5:
 
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm, color = species)) + geom_point()
 
+#Adding coloring by species highlights different trends in the relationship between bill length and depth across different species of penguins
+#Adelie penguines tend to have shorter but deeper bills.
+#Centoo penguines tend to have longer but less deep bills. 
+#The datapoints are so scattered that there appeared to be no discernable relationship/trend until the data was separated by species.
+
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm, color = species)) + geom_point() + facet_wrap(~species)
+
+#This facets the data by species, creating three separate plots for each species.
 
 #Question 6:
 
+#This code yields two separate legends because species is used to as both the color and shape aesthetics.
 
+ggplot(data = penguins, mapping = aes(x = bill_length_mm, y = bill_depth_mm, color = species, shape = species)) +
+geom_point() +
+labs(color = "Species", shape = "Species")
+
+#This code combines the two legends by listing them both as "Species" under the labs function.
 
 #Exercises 1.6.1 (1-2):
 
