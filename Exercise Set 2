@@ -11,8 +11,8 @@ my_varıable
 #Question 2
 
 library(tidyverse)
-ggplot(data = mpg) + 
-  geom_point(mapping = aes(x = displ, y = hwy)) +
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point() +
   geom_smooth(method = "lm")
 
 #Changed libary to library
@@ -21,3 +21,4 @@ ggplot(data = mpg) +
 #Changed maping to mapping
 #Changed "lm to "lm"
 #Added commna between x and y variables
+#Moved aes to the ggplot line
