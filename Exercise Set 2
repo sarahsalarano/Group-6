@@ -22,3 +22,14 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
 #Changed "lm to "lm"
 #Added commna between x and y variables
 #Moved aes to the ggplot line
+
+#Question 3
+
+#This command sends you to the keyboard shortcuts quick reference guide.
+#This menu is accessible under the help dropdown menu.
+
+#Question 4
+
+#This code saves the first plot because the save function specifies which file
+#will be saved.  In this case, my_bar_plot is specified and therefore the code
+#saves the first plot, which is stored as my_bar_plot
