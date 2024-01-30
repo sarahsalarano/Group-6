@@ -1,0 +1,35 @@
+library("nycflights13")
+library("tidyverse")
+
+#3.2.5
+
+#Question 1
+
+filter(flights, arr_delay >= 120)
+filter(flights, dest == "IAH" | dest == "HOU")
+airlines
+filter(flights, carrier == "AA" | carrier == "DL" | carrier == "UA")
+filter(flights, month == 7, month == 8, month == 9)
+filter(flights, arr_delay > 120, dep_delay <= 0)
+#???
+
+#Question 2
+
+arrange(flights, desc(dep_delay))
+
+#Question 3
+
+arrange(flights, air_time)
+
+#Question 4
+
+#???
+
+#Question 5
+
+flights |> arrange(desc(distance)) |> relocate(distance)
+flights |> arrange(distance) |> relocate(distance)
+
+Question #6
+
+#???
