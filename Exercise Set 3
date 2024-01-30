@@ -36,7 +36,17 @@ flights |> arrange(distance) |> relocate(distance)
 
 Question #6
 
-#???
+df6a <- flights |>
+  arrange(desc(air_time)) |>
+  filter(air_time <= 100)
+  
+df6b <- flights |>
+  filter(air_time <= 100) |>
+  arrange(desc(air_time))
+
+#The order does not matter when it comes to output.  Either ordering of arrange and filter
+#functions will give the same result.  However, filtering first reduces the amount of data
+#that the arrange function must sort, which can speed up the code.
 
 #Exercises 3.3.5
 
