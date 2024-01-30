@@ -33,3 +33,178 @@ flights |> arrange(distance) |> relocate(distance)
 Question #6
 
 #???
+
+#Exercises 3.3.5
+
+#Question 1
+
+
+
+#Question 2
+
+
+
+#Question 3
+
+
+
+#Question 4
+
+
+
+#Question 5
+
+
+
+#Question 6
+
+
+
+#Question 7
+
+
+
+#Exercises 3.5.7
+
+#Question 1
+
+df <- data.frame(flights)
+
+print(df1 <- df |>
+        group_by(carrier) |>
+        summarize(avg_delay = mean(arr_delay, na.rm = TRUE)) |>
+        slice_max(avg_delay, n = 1))
+
+#This suggests that the F9 carrier (Frontier) has the worst average delays (21.9 mins, avg).
+
+print(df2 <- df |>
+        group_by(carrier, dest, origin) |>
+        summarize(arr_delay = sum(arr_delay, na.rm = TRUE),
+                  flights = n()) |>
+        group_by(origin, dest) |>
+        mutate(arr_delay_total = sum(arr_delay),
+               flights_total = sum(flights)) |>
+        ungroup() |>
+        mutate(arr_delay_others = (arr_delay_total - arr_delay) / (flights_total - flights),
+               arr_delay_mean = arr_delay / flights,
+               arr_delay_diff = arr_delay_mean - arr_delay_others) |>
+        filter(is.finite(arr_delay_diff)) |>
+        group_by(carrier) |>
+        summarize(arr_delay_diff = mean(arr_delay_diff)) |>
+        arrange(desc(arr_delay_diff)) |>
+        slice_max(arr_delay_diff, n = 1))
+      
+filter(airlines, carrier == "OO")
+
+#It's difficult to fully disentangle the effect of bad airports, but one step is to
+#group by carrier and airports (destinations and origins), then calculating delay by carrier.
+#Next, average over the airports to which the carrier flies.
+#Finally, group by carrier and summarize the arrival delay, then slice the longest for the answer
+#this suggests "OO" (Skywest Airlines) has the worst average delays when accounting for airport
+
+#Question 2
+
+print(df3 <- df |>
+  group_by(origin, flight) |>
+  summarize(dep_delay = dep_delay) |>
+  arrange(desc(dep_delay)) |>
+  ungroup() |>
+  group_by(origin) |>
+  slice_max(dep_delay, n = 1))
+
+#Question 3
+
+df4 <- df |>
+  group_by(sched_dep_time) |>
+  summarize(avg_delay = mean(dep_delay, na.rm = TRUE))
+
+ggplot(data = df4, aes(x = sched_dep_time, y = avg_delay)) +
+  geom_point() +
+  geom_smooth()
+
+#The plot indicates that delay times increase in the late afternoon and peak for flights
+#scheduled for 1900 departures
+
+#Question 4
+
+df5 <- df |>
+  group_by(origin, flight) |>
+  summarize(dep_delay = dep_delay) |>
+  arrange(desc(dep_delay)) |>
+  ungroup() |>
+  group_by(origin) |>
+  slice_min(dep_delay, n = -1)
+
+#Specifying a negative number in a slice function returns all observations and does not slice
+#In other words it "un-slices" over the whole dataframe but keeps the grouping
+
+#Question 5
+
+#The count function counts the number of observations in each group of variables
+#When sort is set to TRUE, the largest groups are moved to the top
+
+#Question 6
+
+df <- tibble(
+  x = 1:5,
+  y = c("a", "b", "a", "a", "b"),
+  z = c("K", "K", "L", "L", "K")
+)
+
+#a
+
+#group_by y should code y as the grouping variable, but nothing will appear to have
+#changed because no other action is taken
+
+df |>
+  group_by(y)
+
+#b
+
+#arrange should sort values from smallest to largest by default, and thus will sort
+#the three 'a' values to the top because R will sort alphabetically in a <chr> column
+
+df |>
+  arrange(y)
+
+#c
+
+#This should group into 'a' values and 'b' values in y, then average the values in
+#column x in those groups, giving two rows with an average for a and for b.
+#(1+3+4)/3 = a and (2+5)/2 = b
+
+df |>
+  group_by(y) |>
+  summarize(mean_x = mean(x))
+
+#d
+
+#This should create three groups (aK, aL, and bK) and average x values in each
+#1 = aK, (3+4)/2 = aL, (5+2)/2 = bK
+
+df |>
+group_by(y, z) |>
+  summarize(mean_x = mean(x))
+
+#e
+
+#This produces the same result as d, but the warning message is suppressed
+
+df |>
+  group_by(y, z) |>
+  summarize(mean_x = mean(x), .groups = "drop")
+
+#f
+
+#these do similar but slightly different things. They each give the average by group but differ in output
+#summarize provides one average for each group, excluding the x column and creating a mean_x column with the mean values
+#mutate creates a new column and provides the average in each row based on the group for that row
+#the difference is a 3x3 output for summarize and a 5x4 output for mutate
+
+df |>
+  group_by(y, z) |>
+  summarize(mean_x = mean(x))
+
+df |>
+  group_by(y, z) |>
+  mutate(mean_x = mean(x))
