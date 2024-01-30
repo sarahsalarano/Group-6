@@ -11,7 +11,9 @@ airlines
 filter(flights, carrier == "AA" | carrier == "DL" | carrier == "UA")
 filter(flights, month == 7, month == 8, month == 9)
 filter(flights, arr_delay > 120, dep_delay <= 0)
-#???
+df1a <- flights |>
+  mutate(makeup = dep_delay - arr_delay) |>
+  filter(dep_delay >= 60 & makeup >= 30)
 
 #Question 2
 
