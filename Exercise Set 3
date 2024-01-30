@@ -38,31 +38,86 @@ Question #6
 
 #Question 1
 
-
+flights |>
+  select(dep_time, sched_dep_time, dep_delay)
+#dep_delay = dep_time - sched_dep_time
 
 #Question 2
 
+#simplest way to select:
+flights |>
+  select(dep_time, dep_delay, arr_time, arr_delay)
 
+#selection based on the patterns of variable names
+flights |>
+  select(starts_with("dep_"),
+         starts_with("arr_"))
+
+#selection based on the variable's position in the dataset
+flights |>
+  select(dep_time, dep_delay:arr_time, arr_delay)
 
 #Question 3
 
-
+#let's try it.
+flights |>
+  select(dep_time, dep_time)
+#it will only print out once in the Console window.
 
 #Question 4
 
+?any_of()
+#it is a selection helper. It is especially useful with negative selections, when
+#you would like to make sure a variable is removed. 
 
+#The primary purpose of any_of is to help select columns in a data frame based on 
+#a character vector of column names. It is often used in conjunction with functions 
+#like select to dynamically choose a subset of columns based on specific conditions 
+#or criteria specified in the character vector.
+
+#for example:
+variables <- c("year", "month", "day", "dep_delay", "arr_delay")
+flights |>
+  select(any_of(variables))
+#The variables "year", "month", "day", "dep_delay", and "arr_delay" are selected.
 
 #Question 5
 
+flights |> select(contains("TIME"))
+flights |> select(contains("time"))
+#basically, the select helpers and the "contain()" function don't distinguish upper
+#and lower case.
 
+#To change the default, simply run the following:
+flights |>
+  select(contains("time", ignore.case = FALSE))
+
+#if we change "time" to "TIME", then we find that there is no match.
+flights |>
+  select(contains("TIME", ignore.case = FALSE))
 
 #Question 6
 
-
+flights |>
+  rename(air_time_min = air_time) |>
+  relocate(air_time_min)
 
 #Question 7
 
+flights |> 
+  select(tailnum) |> 
+  arrange(arr_delay)
 
+#when you execute the first and the second line, the output data frame only contains
+#one variable, which is "tailnum". Then it is pointless to arrange accoring to
+#"arr_delay", which is not even in the data frame now.
+#To correct the error, simply run the following:
+
+flights |> 
+  select(tailnum, arr_delay) |> 
+  arrange(arr_delay)
+
+#By this way, you keep both variables and rank them with an ascending order of "arr_delay".
 
 #Exercises 3.5.7
 
