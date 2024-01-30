@@ -19,11 +19,13 @@ arrange(flights, desc(dep_delay))
 
 #Question 3
 
-arrange(flights, air_time)
+q3 <- flights |> mutate(speed = distance / air_time) |> arrange(desc(speed))
 
 #Question 4
 
-#???
+flights |> distinct(month, day)
+
+#yes, there are 365 disinct month/day combinations.
 
 #Question 5
 
