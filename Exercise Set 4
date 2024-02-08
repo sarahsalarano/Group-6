@@ -25,3 +25,119 @@ dest %in% c("IAH", "HOU"),
 sched_dep_time > 0900,
 sched_arr_time < 2000) |>
 group_by(flight)
+
+#5.2.1
+
+#Question 1
+
+#For Table 1, there are four columns: a country, a year, the number of cases in that 
+#country in that year, and the country's population in that year.
+#An observation in Table 1 is a unit of country-year with TB cases and the country's population
+
+#For Table 2, there are four columns: a country, a year, a count, and what an indicator
+#of what is counted (either cases or the country's population).
+#An observation in Table 2 then is a country-year-count_type, which then indicates a count
+#depending on the count type
+
+#For Table 3, there are three columns: a country, a year, and a rate in character form,
+#which shows the cases of TB divided by the country's population for that year, but the
+#mathematical operation is incomplete because it is a character-type column.
+#An observation in Table 3 is a country-year with the TB rate
+
+#Question 2
+
+#For Table 2:
+
+table2a <- table2 |>
+  pivot_wider(
+    names_from = type,
+    values_from = count
+  ) |>
+  mutate(rate = cases / population * 10000)
+
+#For Table 3: 
+
+table3a <- table3 |>
+  separate(rate, c('cases', 'population'))
+
+table3a$cases <- as.numeric(table3a$cases)
+table3a$population <- as.numeric(table3a$population)
+  
+table3a <- table3a |>
+  mutate(rate = cases / population * 10000)
+
+#7.2.4
+
+#Question 1
+
+
+
+#Question 2
+
+
+
+#Question 3
+
+
+
+#Question 4
+
+
+
+#Question 5
+
+
+
+#Question 6
+
+
+
+#20.2.9
+
+#Question 1
+
+
+
+#Question 2
+
+
+
+#Question 3
+
+
+
+#Question 4
+
+
+
+#Question 5
+
+
+
+#Question 6
+
+
+
+#21.5.10
+
+#Question 1
+
+
+
+#Question 2
+
+
+
+#22.5.3
+
+#Question 1
+
+
+
+#Question 2
+
+
+
+#Question 3
+
+
