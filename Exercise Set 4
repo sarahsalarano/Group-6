@@ -6,8 +6,15 @@ library(dplyr)
 library(tidyverse)
 library(nycflights13)
 
+#Original code: flights|>filter(dest=="IAH")|>group_by(year,month,day)|>summarize(n=n(),
+delay=mean(arr_delay,na.rm=TRUE))|>filter(n>10)
+
 flights |>
 filter(dest == "IAH") |>
 group_by(year, month, day) |>
 summarize(delay = mean(arr_delay, na.rm = TRUE)) |>
 filter(n() > 10)
+
+#I added spaces where necessary
+#I added the summarize function
+#I added n() to the final filter funtion to ensure the code filtered the count of observations
