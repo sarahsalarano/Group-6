@@ -23,4 +23,5 @@ flights |>
 filter(carrier == "UA",
 dest %in% c("IAH", "HOU"),
 sched_dep_time > 0900,
-sched_arr_time < 2000)
+sched_arr_time < 2000) |>
+group_by(flight)
