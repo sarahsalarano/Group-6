@@ -2,6 +2,7 @@
 
 #Question 1
 
+library(dplyr)
 library(tidyverse)
 library(nycflights13)
 
@@ -9,4 +10,4 @@ flights |>
 filter(dest == "IAH") |>
 group_by(year, month, day) |>
 summarize(delay = mean(arr_delay, na.rm = TRUE)) |>
-filter(n>10)
+filter(n() > 10)
