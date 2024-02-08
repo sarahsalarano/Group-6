@@ -15,6 +15,9 @@ group_by(year, month, day) |>
 summarize(delay = mean(arr_delay, na.rm = TRUE)) |>
 filter(n() > 10)
 
-#I added spaces where necessary
-#I added the summarize function
-#I added n() to the final filter funtion to ensure the code filtered the count of observations
+#Original code: flights|>filter(carrier=="UA",dest%in%c("IAH","HOU"),sched_dep_time>
+0900,sched_arr_time<2000)|>group_by(flight)|>summarize(delay=mean(
+arr_delay,na.rm=TRUE),cancelled=sum(is.na(arr_delay)),n=n())|>filter(n>10)
+
+flights |>
+filter(carrier == "UA", dest %in% c("IAH", "HOU"))
