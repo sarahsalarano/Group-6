@@ -122,11 +122,37 @@ table3a <- table3a |>
 
 #Question 1
 
-
+#the dplyr distinct() function is translated to the DISTINCT clause of the SQL query
+#the dplyr head() function is usually translated to the LIMIT clause of the SQL query,
+#but because LIMIT is not an official part of SQL, some databases use TOP or FETCH ROWS.
 
 #Question 2
 
+#SELECT * 
+#  FROM flights
+#WHERE dep_delay < arr_delay
 
+#This code is filtering for observations in the flights dataset where departure
+#delay is less than arrival delay (where the flight lost time in transit)
+
+#in dbplyr this looks like:
+
+library(nycflights13)
+
+dbplyr::copy_nycflights13(con)
+flights_db <- tbl(con, "flights")
+
+fast_flights_db <- flights_db |>
+  filter(dep_delay < arr_delay)
+
+#SELECT *, distance / (air_time / 60) AS speed
+#FROM flights
+
+#This code is 'mutating' a new column named speed with values defined by the formula,
+#using data from the flights dataset
+
+speed_db <- flights_db |>
+  mutate(speed = distance / (air_time / 60))
 
 #22.5.3
 
