@@ -24,7 +24,9 @@ filter(carrier == "UA",
 dest %in% c("IAH", "HOU"),
 sched_dep_time > 0900,
 sched_arr_time < 2000) |>
-group_by(flight)
+group_by(flight) |>
+summarize(delay = mean(arr_delay, na.rm = TRUE), cancelled = sum(is.na(arr_delay))) |>
+filter(n() > 10)
 
 #5.2.1
 
@@ -68,25 +70,47 @@ table3a <- table3a |>
 
 #7.2.4
 
+students <- read_csv("https://pos.it/r4ds-students-csv")
+
 #Question 1
 
-
+#Use the read_delim() function
+#You may need to use delim = "|" to specify the delimiter
 
 #Question 2
 
-
+#All arguments are shared between read_csv() and read_tsv()
 
 #Question 3
 
-
+#read_fwf() reads fixed-width files
+#fwf_widths() specifies the fields by width
+#fwf_positions() specifies the fields by positions
 
 #Question 4
 
+#We need to specify that 'a,b' is separated by ' and not "
+#We use the quote argument with \' to specify the use of '
 
+#read_csv("x,y\n1,'a,b'", quote = "\'")
 
 #Question 5
 
+#read_csv("a,b\n1,2,3\n4,5,6")
+#R created a 2x2 tibble, but the rows and columns both have 3 values
 
+#read_csv("a,b,c\n1,2\n1,2,3,4")
+#There is one less value in the columns than the rows
+#R generates an NA value and combines 3 and 4 to created 34
+
+#read_csv("a,b\n\"1")
+#There are no rows specified
+
+#read_csv("a,b\n1,2\na,b")
+#The values in the second row contain characters instead of numbers
+
+#read_csv("a;b\n1;3")
+#R reads the delimiter as a comma, when it should be a semicolon
 
 #Question 6
 
