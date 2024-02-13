@@ -166,7 +166,7 @@ library(nycflights13)
 dbplyr::copy_nycflights13(con)
 flights_db <- tbl(con, "flights")
 
-fast_flights_db <- flights_db |>
+slow_flights_db <- flights_db |>
   filter(dep_delay < arr_delay)
 
 #SELECT *, distance / (air_time / 60) AS speed
