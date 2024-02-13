@@ -209,7 +209,7 @@ seattle_pq <- open_dataset(path1)
 seattle1 <- seattle_pq |>
   filter(MaterialType == "BOOK") |>
   group_by(CheckoutYear, Title) |>
-  summarise(Checkouts = sum(Checkouts)) |>
+  summarize(Checkouts = sum(Checkouts)) |>
   arrange(CheckoutYear, desc(Checkouts)) |>
   top_n(1, Checkouts) |>
   collect()
