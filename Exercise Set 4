@@ -180,14 +180,57 @@ speed_db <- flights_db |>
 
 #22.5.3
 
+library(arrow)
+library(duckdb)
+
+dir.create("data", showWarnings = FALSE)
+
+multi_download(
+  "https://r4ds.s3.us-west-2.amazonaws.com/seattle-library-checkouts.csv",
+  "data/seattle-library-checkouts.csv",
+  resume = TRUE
+)
+
+seattle <- open_dataset(
+  sources = "seattle-library-checkouts.csv",
+  format = "csv"
+)
+
+path1 <- "data/seattle-library-checkouts"
+
+seattle |>
+  group_by(CheckoutYear) |>
+  write_dataset(path = path1, format = "parquet")
+
+seattle_pq <- open_dataset(path1)
+
 #Question 1
 
-
+seattle1 <- seattle_pq |>
+  filter(MaterialType == "BOOK") |>
+  group_by(CheckoutYear, Title) |>
+  summarise(Checkouts = sum(Checkouts)) |>
+  arrange(CheckoutYear, desc(Checkouts)) |>
+  top_n(1, Checkouts) |>
+  collect()
 
 #Question 2
 
-
+seattle2 <- seattle_pq |>
+  filter(MaterialType == "BOOK") |>
+  distinct(Creator, Title) |>
+  group_by(Creator) |>
+  summarize(n()) |>
+  top_n(1) |>
+  collect()
 
 #Question 3
 
+seattle3 <- seattle_pq |>
+  filter(CheckoutYear >= 2013, MaterialType == "BOOK" | "EBOOK") |>
+  group_by(CheckoutYear, MaterialType) |>
+  summarize(Checkouts = sum(Checkouts)) |>
+  collect()
+
+#The number of ebook checkouts rises significantly during this time
 
