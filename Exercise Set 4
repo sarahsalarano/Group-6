@@ -142,29 +142,59 @@ annoying <- annoying |>
 
 #20.2.9
 
+library(readxl)
+library(writexl)
+library(janitor)
+
 #Question 1
 
+survey <- read_xlsx("survey.xlsx")
 
+survey <- survey |>
+  mutate(n_pets = parse_number(if_else(n_pets == "two", "2", n_pets)))
+
+survey$survey_id <- as.character(survey$survey_id)
+survey$n_pets <- as.numeric(survey$n_pets)
 
 #Question 2
 
-
+roster <- read_xlsx("roster.xlsx")
 
 #Question 3
 
+#a
 
+sales <- read_xlsx("sales.xlsx",
+                   col_names = c("id", "n"))
 
+#b
+
+sales <- sales |>
+  mutate(brand = ifelse(grepl("^Brand", id), id, NA)) |>
+  fill(brand) |>
+  filter(!grepl("^Brand", id)) |>
+  relocate(brand)
+  
 #Question 4
 
+bake_sale <- tibble(
+  item     = factor(c("brownie", "cupcake", "cookie")),
+  quantity = c(10, 5, 8)
+)
 
+write_xlsx(bake_sale, path = "bake-sale.xlsx")
 
 #Question 5
 
+students <- read_xls("students.xlsx")
 
+students <- students |>
+  janitor::clean_names()
 
 #Question 6
 
-
+#Attempting to read an xlsx file with the xls function resulting in the following error:
+#libxls error: Unable to open file
 
 #21.5.10
 
