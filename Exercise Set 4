@@ -145,6 +145,7 @@ annoying <- annoying |>
 library(readxl)
 library(writexl)
 library(janitor)
+library(dplyr)
 
 #Question 1
 
@@ -156,16 +157,31 @@ survey <- survey |>
 survey$survey_id <- as.character(survey$survey_id)
 survey$n_pets <- as.numeric(survey$n_pets)
 
+survey
+
 #Question 2
 
-roster <- read_xlsx("roster.xlsx")
+roster <- read_excel("/Users/zhaorunzhe/Downloads/roster.xlsx")
+
+roster <- roster |>
+  mutate(
+    group = if_else(id <= 7, 1, 2),
+    subgroup = if_else((id <= 3) | ((id >= 8) & (id <= 9)), "A", "B")
+  )
+
+roster
+
 
 #Question 3
 
 #a
 
-sales <- read_xlsx("sales.xlsx",
-                   col_names = c("id", "n"))
+sales <- read_excel(
+  "/Users/zhaorunzhe/Downloads/sales.xlsx",
+  col_names = c("id", "n"),
+  range = "A5:B13"
+  )
+sales
 
 #b
 
@@ -174,6 +190,14 @@ sales <- sales |>
   fill(brand) |>
   filter(!grepl("^Brand", id)) |>
   relocate(brand)
+
+sales <- sales |>
+  mutate(
+    id = parse_number(id),
+    n = parse_number(n)
+  )
+
+sales
   
 #Question 4
 
@@ -186,7 +210,7 @@ write_xlsx(bake_sale, path = "bake-sale.xlsx")
 
 #Question 5
 
-students <- read_xls("students.xlsx")
+students <- read_xlsx("students.xlsx")
 
 students <- students |>
   janitor::clean_names()
