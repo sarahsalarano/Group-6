@@ -161,7 +161,7 @@ survey
 
 #Question 2
 
-roster <- read_excel("/Users/zhaorunzhe/Downloads/roster.xlsx")
+roster <- read_excel("roster.xlsx")
 
 roster <- roster |>
   mutate(
@@ -177,7 +177,7 @@ roster
 #a
 
 sales <- read_excel(
-  "/Users/zhaorunzhe/Downloads/sales.xlsx",
+  "sales.xlsx",
   col_names = c("id", "n"),
   range = "A5:B13"
   )
