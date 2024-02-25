@@ -96,31 +96,65 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
 
 #Question 1
 
+#Here's an example of faceting with the continuous variable 'hwy'
+
+ggplot(mpg, aes(x = displ, y = year)) + 
+geom_point() +
+facet_wrap(~hwy)
+
+#This yields a facet for each subset of the continuous variable.
 
 
 #Question 2
 
-
+#Empty facets indicate that no observations fall in that category 
+#(e.g. there are no rear-wheel drives with 4 cylinders)
+#The resulting plot indcates if  categories have observations or not with a single point
 
 #Question 3
 
+ggplot(mpg) + 
+  geom_point(aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ .)
 
+#The . means drv will not facet across columns
+
+ggplot(mpg) + 
+  geom_point(aes(x = displ, y = hwy)) +
+  facet_grid(. ~ cyl)
+
+#The . means cyl will not facet across rows
 
 #Question 4
 
-
+#The advantage to faceting is that each category is isolated
+#The disadvantage to faceting is that it's more difficult to compare different categories because the data points don't overlap
+#Using color allows us to plot different categories distinctly on the same plot, which can make comparison easier
+#With a larger data set, the different colored points may still overlap significantly and therefore skew our analysis
 
 #Question 5
 
-
+#nrow determines the number of rows
+#ncol determines the number of columns
+#Other options that control the layout include: labeller, as.table, switch, dir, axes, and axis.labels
+#facet_grid() has rows and cols
 
 #Question 6
 
+ggplot(mpg, aes(x = displ)) + 
+  geom_histogram() + 
+  facet_grid(drv ~ .)
 
+#This first code is much easier to read
+#The displ variable is better on the x-axis, and therefore as the columns, because all types of drive share the same displ value range
 
 #Question 7
 
+ggplot(mpg) + 
+geom_point(aes(x = displ, y = hwy)) +
+facet_wrap(drv ~ .)
 
+#When using facet wrap, the positions switched (rows became columns and columns became rows)
 
 #9.5.1
 
