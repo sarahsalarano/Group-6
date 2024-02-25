@@ -1,0 +1,145 @@
+
+library(dplyr)
+library(tidyverse)
+library(tidyr)
+library(ggplot2)
+
+#9.2.1
+
+#Question 1
+
+ggplot(mpg, aes(x = hwy, y = displ)) +
+  geom_point(color = "pink", shape = 17)
+
+#Question 2
+
+#When placed within the aesthetics under geom_point, color is searching for a variable,
+#so color should be placed outside of the aesthetics within geom_point instead, like so:
+
+ggplot(mpg) +
+  geom_point(aes(x = displ, y = hwy), color = "blue")
+
+#Question 3
+
+#The stroke aesthetic lets you modify the width of the border for shapes 21-25.
+
+ggplot(mpg, aes(x = hwy, y = displ)) +
+  geom_point(color = "pink", shape = 24, stroke = 3)
+
+#Question 4
+
+ggplot(mpg, aes(x = hwy, y = displ, color = displ < 5)) +
+  geom_point()
+
+#when mapped within the global, inserting a logical command for color is an acceptable command,
+#but the result creates a logical value of either TRUE or FALSE and the color is based on these
+#two values
+
+#9.3.1
+
+#Question 1
+
+#The geom for a line chart is geom_smooth
+#The geom for a boxplot is geom_boxplot
+#The geom for a histogram is geom_histogram
+#The geom for an area chart is geom_area
+
+#Question 2
+
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_smooth(aes(color = drv), show.legend = FALSE)
+
+#The default (without show.legend = FALSE), provides a legend on the plot's right side
+#This command removes that legend, which may be useful for removing clutter or information
+#that may already be obvious based on the plot
+
+#Question 3
+
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_smooth(aes(color = drv), se = FALSE)
+
+#The 'se' command is the standard errors command.  Setting this to FALSE removes
+#the gray confidence intervals that surround each of the lines
+
+#Question 4
+
+#Top left
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(size = 5) +
+  geom_smooth(size = 2, se = FALSE)
+
+#Top right
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(size = 5) +
+  geom_smooth(aes(group = drv), size = 2, se = FALSE)
+
+#Middle left
+ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
+  geom_point(size = 5) +
+  geom_smooth(aes(group = drv), size = 2, se = FALSE)
+
+#Middle right
+ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
+  geom_point(size = 5) +
+  geom_smooth(color = "blue", size = 2, se = FALSE)
+
+#Bottom left
+ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
+  geom_point(size = 5) +
+  geom_smooth(aes(group = drv, linetype = drv), color = "blue", size = 2, se = FALSE)
+
+#Bottom right
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(fill = drv), color = "white", shape = 21, stroke = 5, size = 5)
+
+#9.4.1
+
+#Question 1
+
+
+
+#Question 2
+
+
+
+#Question 3
+
+
+
+#Question 4
+
+
+
+#Question 5
+
+
+
+#Question 6
+
+
+
+#Question 7
+
+
+
+#9.5.1
+
+#Question 1
+
+
+
+#Question 2
+
+
+
+#Question 3
+
+
+
+#Question 4
+
+
+
+#Question 5
+
+
