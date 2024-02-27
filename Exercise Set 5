@@ -174,7 +174,27 @@ facet_wrap(drv ~ .)
 
 #Question 3
 
+the list of geom and stat are as follows:
 
+geom	stat
+geom_bar()	stat_count()
+geom_bin2d()	stat_bin_2d()
+geom_boxplot()	stat_boxplot()
+geom_contour_filled()	stat_contour_filled()
+geom_contour()	stat_contour()
+geom_count()	stat_sum()
+geom_density_2d()	stat_density_2d()
+geom_density()	stat_density()
+geom_dotplot()	stat_bindot()
+geom_function()	stat_function()
+geom_sf()	stat_sf()
+geom_sf()	stat_sf()
+geom_smooth()	stat_smooth()
+geom_violin()	stat_ydensity()
+geom_hex()	stat_bin_hex()
+geom_qq_line()	stat_qq_line()
+geom_qq()	stat_qq()
+geom_quantile()	stat_quantile()
 
 #Question 4
 
