@@ -160,11 +160,17 @@ facet_wrap(drv ~ .)
 
 #Question 1
 
+?stat_summary
 
+#stat_summary operates on a binned x or y.  This is more than a count, as this can
+#compute any aggregate.
 
 #Question 2
 
+?geom_col
 
+#geom_bar provides a simple count of each value on the x-axis.  Geom_bar provides
+#bars where the heights are determined by values in the data instead of just a count
 
 #Question 3
 
@@ -172,8 +178,22 @@ facet_wrap(drv ~ .)
 
 #Question 4
 
+?stat_smooth
 
+#stat_smooth computes a mean and a normal confidence interval using a t-based approximation.
+#There are at least 17 different arguments that control its behavior, but some of the most
+#important are level (the confidence interval), method (the function), and formula (the formula
+#used within the specified function).
 
 #Question 5
 
+ggplot(diamonds, aes(x = cut, y = after_stat(prop), group = 1)) + 
+  geom_bar()
 
+ggplot(diamonds, aes(x = cut, fill = color, y = after_stat(prop), group = 1)) + 
+  geom_bar()
+
+#each of these plots call for a proportion on the y-axis, but without a specified grouping,
+#each column is plotted as its own group and is therefore 100% of itself.  Setting group
+#to 1 combines all columns under a single category and shows the proportion of each
+#based on the overall count
