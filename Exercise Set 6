@@ -1,0 +1,136 @@
+
+library(dplyr)
+library(tidyverse)
+library(tidyr)
+library(ggplot2)
+
+#Exercise 6
+
+#10.3.3
+
+#1
+
+ggplot(diamonds, aes(x = x)) +
+  geom_histogram() +
+  coord_cartesian(ylim = c(0,25))
+
+ggplot(diamonds, aes(x = y)) +
+  geom_histogram() +
+  coord_cartesian(ylim = c(0,25))
+
+ggplot(diamonds, aes(x = z)) +
+  geom_histogram() +
+  coord_cartesian(ylim = c(0,25))
+
+#As the text suggests, there are outliers in this data that are likely due to
+#data coding errors.  ~20 z-values are 0, along with 7 values of x- and y-values,
+#which is impossible.  There are also rather large diamonds (> 30mm).
+
+#Additionally, the x- and y-values tend to all fall between 3mm and 11mm, while
+#the z-values are consistently smaller and top out around 8mm.  This suggests that
+#x- and y-values are the length and width (assuming mostly circular tops),
+#while z-values are the depth.
+
+#2
+
+ggplot(diamonds, aes(x = price, fill = cut)) +
+  geom_histogram(binwidth = 10) +
+  coord_cartesian(xlim = c(1000, 2000))
+
+#Price seems to make sense: there are more diamonds in an "affordable" price range,
+#and the quantity decreases as price increases.  This also appears consistent across
+#cut type. However, there is a peculiar gap at $1500.
+  
+#3
+
+ggplot(diamonds, aes(x = carat)) +
+  geom_histogram(binwidth = 0.01) + 
+  coord_cartesian(xlim = c(0.97, 1.03))
+
+ninenine <- diamonds |>
+  filter(carat == 0.99)
+
+onecarat <- diamonds |>
+  filter(carat == 1)
+
+#There are 23 diamonds that are 0.99 carats, but there are 1558 diamonds that are
+#1 carat.  This may be due to sales and pricing rules that prohibit rounding up and
+#guarantee a significantly higher price for diamonds that are greater than one carat,
+#thereby disincentivizing jewelers from having diamonds that are slightly less than 1 carat
+
+#4
+
+ggplot(diamonds, aes(x = z)) +
+  geom_histogram() +
+  coord_cartesian(xlim = c(2.3, 5.5))
+
+#With binwidth unset, it appears that the default attempts to keep an arbitrary number
+#of bins, though it is somewhat unclear as to why it selects a certain number.  If we
+#zoom in and try to cut off a bin halfway, this is permitted and the bins do not adjust
+
+#10.4.1
+
+#1
+
+
+
+#2
+
+
+
+#3
+
+
+
+#11.2.1
+
+#1
+
+
+
+#2
+
+
+
+#3
+
+
+
+#11.3.1
+
+#1
+
+
+
+#2
+
+
+
+#3
+
+
+
+#4
+
+
+
+#5
+
+
+
+#11.4.6
+
+#1
+
+
+
+#2
+
+
+
+#3
+
+
+
+#4
+
