@@ -68,32 +68,85 @@ ggplot(diamonds, aes(x = z)) +
 #of bins, though it is somewhat unclear as to why it selects a certain number.  If we
 #zoom in and try to cut off a bin halfway, this is permitted and the bins do not adjust
 
-#10.4.1
-
 #1
 
-
+#NA values are removed and not plotted for both bar plots and histograms.  However, 
+#the overall count is reduced for the category with bar plots, but for histograms
+#there is simply a gap.  As a result, bar plots may appear to have fewer datapoints
+#than would otherwise be expected.
 
 #2
 
-
+#mean and sum treat do not work (rather, outputs NA) if there are NA values in the vector,
+#so including na.rm = TRUE removes those values and allows the operation to examine
+#the remaining numeric values.
 
 #3
 
+nycflights13::flights |> 
+  mutate(
+    cancelled = is.na(dep_time),
+    sched_hour = sched_dep_time %/% 100,
+    sched_min = sched_dep_time %% 100,
+    sched_dep_time = sched_hour + (sched_min / 60)
+  ) |> 
+  ggplot(aes(x = sched_dep_time, y =..density..)) + 
+  geom_freqpoly(aes(color = cancelled), binwidth = 1/4) +
+  facet_wrap(~cancelled)
 
+#When plotting with the y-axis set to density and facet wrapping based on whether
+#the flights was cancelled, it appears that there is a greater frequency of cancelled
+#flights in the evenings, while non-cancelled flights occur steadily throughout the day,
+#with a slight dip around noon.
 
 #11.2.1
 
 #1
 
-
-
+ggplot(mpg |>
+         filter(class != "2seater"), 
+       aes(x = displ, y = hwy, color = drv)) +
+  geom_point(position = "jitter") +
+  geom_smooth(aes(linetype = drv), size = 2, se = FALSE) +
+  labs(
+    x = "Engine displacement (L)",
+    y = "Highway fuel economy (mpg)",
+   # color = "Car Type",
+    title = "Fuel Efficiency Generally Decreases With Engine Size",
+    subtitle = "This trend is consistent across various drive types",
+    caption = "Two seaters (sports cars) are excluded as outliers because of their light weight") +
+  scale_color_manual(name = "Type of Drive Train",
+                     labels = c("4 Wheel Drive", "Front Wheel Drive", "Rear Wheel Drive"),
+                     values = c("red", "purple", "blue")) +
+  scale_linetype_manual(name = "Type of Drive Train",
+                        labels = c("4 Wheel Drive", "Front Wheel Drive", "Rear Wheel Drive"),
+                        values = c("solid", "dashed", "longdash"))
+  
 #2
 
-
+ggplot(mpg, aes(x = cty, y = hwy, color = drv, shape = drv)) +
+  geom_point(size = 3) +
+  labs(
+    x = "City MPG",
+    y = "Highway MPG") +
+  guides(color = guide_legend(title = "Type of drive train"),
+         shape = guide_legend(title = "Type of drive train"))
 
 #3
 
+replac <- read.csv("decapdatamar24.csv")
+
+ggplot(replac2, aes(x = ldrlevelfac, fill = polity2fac)) +
+  geom_bar() +
+  labs(title = "Figure 1: Leadership Decapitation Attempts by Seniority and Polity",
+       x = "Leadership Level",
+       y = "Count",
+       subtitle = "Decapitation targets are mostly autocratic leaders and heads of state") +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold"),
+        plot.subtitle = element_text(hjust = 0.5)) +
+  scale_fill_manual(name = "Regime Type",
+                     labels = c("Autocratic", "Anocratic", "Democratic"),
+                     values = c("orange", "purple", "blue"))
 
 
 #11.3.1
