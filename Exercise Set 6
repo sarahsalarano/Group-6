@@ -151,39 +151,115 @@ ggplot(replac2, aes(x = ldrlevelfac, fill = polity2fac)) +
 
 #11.3.1
 
+install.packages("ggrepel")
+library(dplyr)
+library(tidyverse)
+library(tidyr)
+library(ggplot2)
+library(ggrepel)
+
 #1
 
+plot <- ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point() +
+  annotate(
+    geom = "label", x = 3.5, y = 38,
+    label = trend_text,
+    hjust = "left", color = "red"
+  ) +
+  annotate(
+    geom = "segment",
+    x = 3, y = 35, xend = 5, yend = 25, color = "red",
+    arrow = arrow(type = "closed")
+  )
 
+plot +
+geom_text()
 
 #2
 
+plot +
+annotate(
+geom = "point",
+x = median(mpg$displ),
+y = median(mpg$hwy),
+shape = 1,
+size = 5,
+color = "purple"
+)
 
+#This created a purple circle (shape 1) in the median of the data
 
 #3
 
-
+#When using geom_text(), the labels are typically added by default to the facets
+#To add a single facet, you can edit the command in geom_text to only include relevant datapoints from your specified observations
+#To put a different label in each facet, you must first create datasets with labels for each facet and then specify which label you are using in geom_text
 
 #4
 
+#The following arguments control the appearance of the background box:
+
+#position: position adjustment, either as a string, or the result of a call to a position adjustment function
+#…: aesthetics, used to set an aesthetic to a fixed value, like colour = "red" or size = 3. 
+#nudge_x, nudge_y: horizontal and vertical adjustment to nudge labels by
+#label.padding: amount of padding around label. 
+#label.r: radius of rounded corners. Defaults to 0.15 lines.
+#label.size: size of label border, in mm.
+#size.unit: how the size aesthetic is interpreted (e.g. mm, cm, in)
 
 
 #5
 
+#the four arguments to arrow are:
 
+#angle: the angle of the arrow head in degrees (smaller numbers produce narrower, pointier arrows)
+#length: unit specifying the length of the arrow head (from tip to base)
+#ends: one of "last", "first", or "both", indicating which ends of the line to draw arrow heads
+#type: one of "open" or "closed" indicating whether the arrow head should be a closed triangle
+
+ggplot(mpg, aes(x = displ, y = hwy)) +
+geom_point() +
+annotate(
+geom = "label", x = 3.5, y = 38,
+label = trend_text,
+hjust = "left", color = "red"
+) +
+annotate(
+geom = "segment",
+x = 3, y = 35, xend = 5, yend = 25, color = "red",
+arrow = arrow(type = "open", ends = "both", angle = "90", length = unit(0.5, "inches"))
+)
+
+#the above plot has the following features:
+#open ends (aka lines instead of solid blocks)
+#arrowheads on both ends of the line
+#arrowheads on a 90 degree angle (basically just perpendicular lines)
+#length of 0.5 inches
 
 #11.4.6
 
 #1
 
-
+#in this code, we are attempting to use scale_color_gradient() to overried the hex scale, but scale_color_gradient uses the color aes, which hex does not
+#geom_hex uses the fill aes, therefore there will be no effect if we use scale_color_gradient()
 
 #2
 
-
+#in scale, the first argument is name. this is the name of the scale used as the axis or legend title
+#in labs, the first argument is …, which is the list of new name-value (aesthetic) pairs. title comes afterwards
 
 #3
 
-
+presidential |>
+  mutate(id = 33 + row_number()) |>
+  ggplot(aes(x = start, y = id, color = party)) +
+  geom_point() +
+  geom_segment(aes(xend = end, yend = id)) +
+  scale_color_manual(values = c(Republican = "#E81B23", Democratic = "#00AEF3"))
 
 #4
 
+ggplot(diamonds, aes(x = carat, y = price)) +
+geom_point(aes(color = cut), alpha = 1/20) +
+guides(color = guide_legend(alpha = 1, override.aes = list(size = 4)))
