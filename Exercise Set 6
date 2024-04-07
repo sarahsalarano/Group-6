@@ -151,12 +151,15 @@ ggplot(replac2, aes(x = ldrlevelfac, fill = polity2fac)) +
 
 #11.3.1
 
-install.packages("ggrepel")
-library(dplyr)
+install.packages("tidyverse")
 library(tidyverse)
-library(tidyr)
 library(ggplot2)
+install.packages("scales")
+library(scales)
+install.packages("ggrepel")
 library(ggrepel)
+install.packages("patchwork")
+library(patchwork)
 
 #1
 
@@ -173,8 +176,17 @@ plot <- ggplot(mpg, aes(x = displ, y = hwy)) +
     arrow = arrow(type = "closed")
   )
 
-plot +
-geom_text()
+label <- tribble(
+  ~displ, ~hwy, ~label, ~vjust, ~hjust,
+  Inf, Inf, "Top right", "top", "right",
+  Inf, -Inf, "Bottom right", "bottom", "right",
+  -Inf, Inf, "Top left", "top", "left",
+  -Inf, -Inf, "Bottom left", "bottom", "left"
+  )
+
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point() +
+  geom_text(aes(label = label, vjust = vjust, hjust = hjust), data = label)
 
 #2
 
@@ -257,6 +269,32 @@ presidential |>
   geom_point() +
   geom_segment(aes(xend = end, yend = id)) +
   scale_color_manual(values = c(Republican = "#E81B23", Democratic = "#00AEF3"))
+
+presidential <- presidential |>
+  mutate(id = 33 + row_number())
+
+ggplot(presidential, aes(x = start, y = id)) +
+  geom_point(aes(color = party)) +
+  geom_segment(aes(xend = end, yend = id, color = party)) +
+  geom_text(aes(label = name), hjust = 0, vjust = 0, nudge_y = 0.1) +
+  scale_color_manual(values = c(Republican = "#E81B23", Democratic = "#00AEF3")) +
+  scale_x_date(
+    name = "Term",
+    breaks = seq(from = ymd("1953-01-20"), to = ymd("2021-01-20"), by = "4 years"),
+    date_labels = "'%y"
+  ) +
+  scale_y_continuous(breaks = 34:45) +
+  theme(
+    panel.grid.minor = element_blank(),
+    axis.ticks.y = element_blank()
+  ) +
+  labs(
+    x = "Term",
+    y = "President",
+    title = "Terms of US Presidents",
+    subtitle = "Eisenhower (34th) to Trump (45th)",
+    color = "Party"
+  )
 
 #4
 
